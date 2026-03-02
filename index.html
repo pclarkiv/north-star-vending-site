@@ -1,80 +1,13 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>North Star Vending</title>
-  <meta name="description" content="Premium vending solutions for offices, schools, and apartments in DFW." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header class="nav">
-    <div class="container nav-inner">
-      <div class="logo">North Star <span>Vending</span></div>
-      <a class="btn btn-sm" href="#contact">Get Free Placement</a>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero container">
-      <div>
-        <p class="eyebrow">DFW • Fast Setup • No Cost to Property</p>
-        <h1>Modern vending machines for high-traffic locations.</h1>
-        <p class="lead">We install, restock, and service premium snack + drink machines so your tenants, team, or guests stay fueled.</p>
-        <div class="cta-row">
-          <a href="#contact" class="btn">Request a Machine</a>
-          <a href="#benefits" class="btn btn-ghost">See Benefits</a>
-        </div>
-      </div>
-      <div class="card stats">
-        <h3>Why locations choose us</h3>
-        <ul>
-          <li><strong>48hr</strong> average setup time</li>
-          <li><strong>99%</strong> machine uptime target</li>
-          <li><strong>Weekly</strong> restocking + support</li>
-          <li><strong>$0</strong> installation cost</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="benefits" class="container grid-3">
-      <article class="card">
-        <h3>Hands-off service</h3>
-        <p>We handle placement, inventory, maintenance, and payment systems end-to-end.</p>
-      </article>
-      <article class="card">
-        <h3>Custom product mix</h3>
-        <p>Healthy options, top-selling snacks, and beverages tailored to your audience.</p>
-      </article>
-      <article class="card">
-        <h3>Reliable support</h3>
-        <p>Quick-response service with proactive monitoring to minimize downtime.</p>
-      </article>
-    </section>
-
-    <section class="container testimonial card">
-      <p>“North Star Vending made setup effortless. Our staff loves the options and we don’t manage a thing.”</p>
-      <span>— Office Manager, Fort Worth</span>
-    </section>
-
-    <section id="contact" class="container contact card">
-      <h2>Let’s place a machine at your location</h2>
-      <p>Email us and we’ll schedule a quick site fit check.</p>
-      <a class="btn" href="mailto:hello@northstarvending.co?subject=Vending%20Machine%20Placement">hello@northstarvending.co</a>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <p>© <span id="year"></span> North Star Vending • Fort Worth, TX</p>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>North Star Vending</title>
+    <meta name="description" content="Premium vending solutions for offices, apartments, schools, and gyms in DFW." />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
