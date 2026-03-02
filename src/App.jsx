@@ -4,18 +4,36 @@ import {
   Phone, Mail, MapPin, CheckCircle2, ChevronRight, ShieldCheck
 } from 'lucide-react'
 
+const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT
+
 export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [formStatus, setFormStatus] = useState('idle')
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault()
     setFormStatus('submitting')
-    setTimeout(() => {
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+
+    try {
+      if (FORMSPREE_ENDPOINT) {
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: formData,
+        })
+        if (!res.ok) throw new Error('Form submission failed')
+      }
+
       setFormStatus('success')
-      e.target.reset()
-      setTimeout(() => setFormStatus('idle'), 3000)
-    }, 1000)
+      form.reset()
+      setTimeout(() => setFormStatus('idle'), 3500)
+    } catch {
+      setFormStatus('error')
+      setTimeout(() => setFormStatus('idle'), 4500)
+    }
   }
 
   const scrollToSection = (id) => {
@@ -166,17 +184,22 @@ export default function App() {
                 <div className="flex items-center"><Mail className="h-6 w-6 mr-4" /> <span>hello@destineats.com</span></div>
                 <div className="flex items-center"><MapPin className="h-6 w-6 mr-4" /> <span>Serving Destin, FL & Surrounding Areas</span></div>
               </div>
+              {!FORMSPREE_ENDPOINT && (
+                <p className="mt-8 text-sm text-purple-100/90">Lead form is in demo mode. Add <code className="font-mono">VITE_FORMSPREE_ENDPOINT</code> to activate live submissions.</p>
+              )}
             </div>
             <div className="p-10 lg:p-16">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Request a Machine</h3>
               <form onSubmit={handleFormSubmit} className="space-y-6">
-                <input required type="text" className="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Business Name" />
-                <input required type="email" className="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Email" />
-                <input required type="tel" className="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Phone" />
+                <input name="business" required type="text" className="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Business Name" />
+                <input name="email" required type="email" className="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Email" />
+                <input name="phone" required type="tel" className="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Phone" />
+                <textarea name="notes" className="w-full px-4 py-3 rounded-lg border border-gray-300" rows="4" placeholder="Location + estimated daily traffic" />
                 <button type="submit" disabled={formStatus === 'submitting'} className="w-full py-4 px-6 rounded-xl text-lg font-bold text-white bg-purple-600 hover:bg-purple-700 disabled:opacity-60">
                   {formStatus === 'submitting' ? 'Sending Request...' : formStatus === 'success' ? 'Request Received!' : 'Submit Request'}
                 </button>
                 {formStatus === 'success' && <p className="text-green-600 text-center font-medium mt-2">We will be in touch shortly!</p>}
+                {formStatus === 'error' && <p className="text-red-600 text-center font-medium mt-2">Submission failed. Please try again.</p>}
               </form>
             </div>
           </div>
