@@ -50,7 +50,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-purple-500/40">
-      <nav className="fixed w-full bg-black/75 backdrop-blur-xl text-white z-50 border-b border-purple-500/30">
+      <nav className="fixed w-full bg-black/45 backdrop-blur-2xl text-white z-50 border-b border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20">
             <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
@@ -116,7 +116,7 @@ export default function App() {
           <div className="grid grid-cols-2 gap-4">
             <img src={machineImages[0]} alt="Machine 1" className="rounded-2xl h-52 sm:h-64 w-full object-cover border border-white/20" />
             <img src={machineImages[2]} alt="Machine 2" className="rounded-2xl h-52 sm:h-64 w-full object-cover border border-white/20 mt-8" />
-            <div className="col-span-2 rounded-2xl bg-white/10 border border-white/20 p-6 backdrop-blur">
+            <div className="col-span-2 rounded-2xl bg-white/10 border border-white/30 p-6 backdrop-blur-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_40px_rgba(0,0,0,0.35)]">
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div><p className="text-3xl font-extrabold text-purple-300">24/7</p><p className="text-xs text-slate-300">Monitoring</p></div>
                 <div><p className="text-3xl font-extrabold text-purple-300">0$</p><p className="text-xs text-slate-300">Install Cost</p></div>
@@ -139,7 +139,7 @@ export default function App() {
               { icon: Coffee, title: 'Drinks & Energy', body: 'Cold beverages, sparkling waters, energy drinks, and more.' },
               { icon: ShieldCheck, title: 'Healthy Mixes', body: 'Protein bars, low-sugar choices, and wellness-friendly options.' },
             ].map((item) => (
-              <div key={item.title} className="rounded-2xl p-8 bg-gradient-to-b from-slate-50 to-slate-100 border border-slate-200 hover:-translate-y-1 transition-transform shadow-sm">
+              <div key={item.title} className="rounded-2xl p-8 bg-white/65 backdrop-blur-xl border border-white/70 hover:-translate-y-1 transition-transform shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_12px_30px_rgba(15,23,42,0.15)]">
                 <div className="w-14 h-14 rounded-2xl bg-purple-600 text-white flex items-center justify-center"><item.icon className="w-7 h-7" /></div>
                 <h3 className="text-xl font-bold mt-5">{item.title}</h3>
                 <p className="mt-2 text-slate-600">{item.body}</p>
@@ -189,7 +189,7 @@ export default function App() {
               ))}
             </div>
           </div>
-          <div className="rounded-3xl border border-purple-400/30 bg-purple-950/30 p-8">
+          <div className="rounded-3xl border border-white/30 bg-white/10 backdrop-blur-2xl p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_20px_40px_rgba(0,0,0,0.3)]">
             <h4 className="text-2xl font-bold mb-5"><span className="text-purple-300">Cost to your business:</span> $0.00</h4>
             <ul className="space-y-4 text-lg text-slate-200">
               <li className="flex items-center gap-3"><CheckCircle2 className="text-purple-300" /> Delivery + setup included</li>
@@ -203,7 +203,7 @@ export default function App() {
 
       <section id="contact" className="py-20 bg-slate-100 text-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden grid lg:grid-cols-2">
+          <div className="bg-white/70 backdrop-blur-2xl rounded-3xl shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_30px_60px_rgba(15,23,42,0.18)] overflow-hidden grid lg:grid-cols-2 border border-white/80">
             <div className="bg-gradient-to-br from-purple-600 to-fuchsia-600 p-10 lg:p-14 text-white">
               <h2 className="text-3xl font-extrabold">Ready for a Better Breakroom?</h2>
               <p className="mt-4 text-purple-100">Tell us about your location and we’ll recommend the best machine setup.</p>
