@@ -15,7 +15,7 @@ export default function App() {
       setFormStatus('success')
       e.target.reset()
       setTimeout(() => setFormStatus('idle'), 3000)
-    }, 900)
+    }, 1000)
   }
 
   const scrollToSection = (id) => {
@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
-      <nav className="fixed w-full bg-black text-white z-50 shadow-lg border-b border-purple-700/70">
+      <nav className="fixed w-full bg-black text-white z-50 shadow-lg border-b border-purple-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20">
             <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
@@ -34,26 +34,18 @@ export default function App() {
                 <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center border-2 border-white">
                   <Package className="w-6 h-6 text-white" />
                 </div>
-                <span className="font-extrabold text-2xl tracking-tight">
-                  North<span className="text-purple-500">Star</span>
-                </span>
+                <span className="font-extrabold text-2xl tracking-tight text-white">Destin<span className="text-purple-600">Eats</span></span>
               </div>
             </div>
 
             <div className="hidden md:flex items-center space-x-8">
-              <button onClick={() => scrollToSection('services')} className="hover:text-purple-400 transition-colors font-medium">Services</button>
-              <button onClick={() => scrollToSection('benefits')} className="hover:text-purple-400 transition-colors font-medium">Why Us</button>
-              <button onClick={() => scrollToSection('machines')} className="hover:text-purple-400 transition-colors font-medium">Our Machines</button>
-              <button onClick={() => scrollToSection('contact')} className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-full font-bold transition-transform hover:scale-105 active:scale-95 shadow-md">
-                Get a Machine
-              </button>
+              <button onClick={() => scrollToSection('services')} className="hover:text-purple-500 transition-colors font-medium">Services</button>
+              <button onClick={() => scrollToSection('benefits')} className="hover:text-purple-500 transition-colors font-medium">Why Us</button>
+              <button onClick={() => scrollToSection('contact')} className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-full font-bold transition-transform hover:scale-105">Get a Machine</button>
             </div>
 
             <div className="md:hidden flex items-center">
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-gray-300 hover:text-white focus:outline-none p-2"
-              >
+              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-300 hover:text-white focus:outline-none p-2">
                 {isMobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
               </button>
             </div>
@@ -65,110 +57,141 @@ export default function App() {
             <div className="px-4 pt-2 pb-6 space-y-2">
               <button onClick={() => scrollToSection('services')} className="block w-full text-left px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Services</button>
               <button onClick={() => scrollToSection('benefits')} className="block w-full text-left px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Why Us</button>
-              <button onClick={() => scrollToSection('machines')} className="block w-full text-left px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Our Machines</button>
-              <button onClick={() => scrollToSection('contact')} className="block w-full text-left px-3 py-3 text-base font-medium bg-purple-600 text-white rounded-md">Get a Machine</button>
+              <button onClick={() => scrollToSection('contact')} className="block w-full text-center mt-4 bg-purple-600 text-white px-3 py-3 rounded-md font-bold text-base hover:bg-purple-700">Get a Machine Today</button>
             </div>
           </div>
         )}
       </nav>
 
-      <header className="pt-28 pb-14 bg-gradient-to-br from-black via-gray-900 to-purple-950 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="uppercase tracking-[0.2em] text-purple-300 text-sm mb-3">Fort Worth • Dallas • Arlington</p>
-            <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight">Premium vending solutions for busy properties.</h1>
-            <p className="mt-5 text-gray-300 max-w-xl">We place, stock, and maintain modern snack + drink machines with cashless payments and fast local support.</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button onClick={() => scrollToSection('contact')} className="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-full font-bold inline-flex items-center gap-2">Request Free Placement <ChevronRight className="w-4 h-4" /></button>
-              <button onClick={() => scrollToSection('benefits')} className="border border-gray-600 hover:border-purple-400 px-6 py-3 rounded-full font-semibold">See Benefits</button>
+      <section className="relative pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden">
+        <div className="absolute inset-0 bg-black">
+          <img src="https://images.unsplash.com/photo-1585342565162-3704fc9b2a11?auto=format&fit=crop&q=80&w=2070" alt="Vending Machine Background" className="w-full h-full object-cover opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 flex flex-col md:flex-row items-center mt-12">
+          <div className="md:w-3/5 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-600/20 border border-purple-500/30 text-purple-400 font-semibold text-sm mb-6">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Premium Vending Services in Destin</span>
+            </div>
+            <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl lg:text-7xl mb-6">
+              Upgrade Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-purple-600">Breakroom</span>
+            </h1>
+            <p className="mt-3 text-base text-gray-300 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl mb-8 leading-relaxed">
+              Modern, reliable, and fully-stocked vending solutions at <strong className="text-white">zero cost</strong> to your business.
+              We handle the machines, inventory, and maintenance.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <button onClick={() => scrollToSection('contact')} className="px-8 py-4 text-lg font-bold rounded-full text-white bg-purple-600 hover:bg-purple-700 shadow-lg shadow-purple-600/30 transition-transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                Request a Machine <ChevronRight className="w-5 h-5" />
+              </button>
+              <button onClick={() => scrollToSection('services')} className="px-8 py-4 border-2 border-white text-lg font-bold rounded-full text-white hover:bg-white hover:text-black transition-colors">
+                View Services
+              </button>
             </div>
           </div>
-          <div className="bg-white/10 border border-white/20 rounded-2xl p-6 backdrop-blur">
-            <h3 className="font-bold text-xl mb-4">What you get</h3>
-            <ul className="space-y-3 text-gray-100">
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-purple-400" /> No installation cost</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-purple-400" /> Weekly restocking + cleaning</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-purple-400" /> Card / tap-to-pay enabled</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-purple-400" /> Fast service response</li>
-            </ul>
+
+          <div className="hidden md:block md:w-2/5 mt-10 md:mt-0 relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-purple-600 to-purple-900 rounded-3xl transform rotate-3 scale-105 opacity-50 blur-lg" />
+            <img src="https://images.unsplash.com/photo-1625650484478-113df4bfc370?auto=format&fit=crop&q=80&w=800" alt="Modern Snack Vending Machine" className="relative rounded-3xl shadow-2xl border-4 border-gray-800 object-cover h-[500px] w-full" />
           </div>
         </div>
-      </header>
+      </section>
 
-      <section id="services" className="py-16">
+      <section id="services" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center">Services</h2>
-          <div className="mt-10 grid md:grid-cols-3 gap-6">
+          <div className="text-center mb-16">
+            <h2 className="text-base text-purple-600 font-bold tracking-wide uppercase">What We Offer</h2>
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Tailored Vending Solutions</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
-              { icon: Coffee, title: 'Snack + Beverage Setup', body: 'Machine placement based on traffic and audience preferences.' },
-              { icon: CreditCard, title: 'Cashless Payment', body: 'Apple Pay, Google Pay, tap cards, and traditional payment options.' },
-              { icon: Wrench, title: 'Maintenance + Repairs', body: 'Proactive checks and quick repair visits to keep machines live.' }
+              { icon: Package, title: 'Premium Snacks', body: 'A wide variety of chips, candies, pastries, and popular brand-name snacks.' },
+              { icon: Coffee, title: 'Cold Beverages', body: 'Sodas, sparkling waters, energy drinks, and juices customized to your site.' },
+              { icon: CheckCircle2, title: 'Healthy Options', body: 'Protein bars, nuts, baked chips, and low-sugar beverages available.' },
             ].map((item) => (
-              <div key={item.title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <item.icon className="w-8 h-8 text-purple-600" />
-                <h3 className="mt-4 font-bold text-xl">{item.title}</h3>
-                <p className="mt-2 text-gray-600">{item.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="benefits" className="py-16 bg-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center">Why North Star</h2>
-          <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {['No-cost installation', 'Custom product mix', 'Weekly restocking', 'Reliable local support'].map((benefit) => (
-              <div key={benefit} className="bg-white p-5 rounded-xl border border-gray-200 flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-purple-600 mt-0.5" />
-                <span className="font-medium">{benefit}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="machines" className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center">Our Machines</h2>
-          <p className="text-center text-gray-600 mt-3">Modern, clean, and high-capacity units for offices, schools, gyms, and apartments.</p>
-          <div className="mt-10 grid md:grid-cols-3 gap-6">
-            {['Combo Machine', 'Snack-Only Machine', 'Beverage-Only Machine'].map((name) => (
-              <div key={name} className="rounded-2xl overflow-hidden border border-gray-200 bg-white">
-                <div className="h-44 bg-gradient-to-br from-purple-700 to-black" />
-                <div className="p-5">
-                  <h3 className="font-bold text-lg">{name}</h3>
-                  <p className="text-gray-600 mt-2">High reliability, telemetry-enabled, and perfect for busy locations.</p>
+              <div key={item.title} className="bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all group">
+                <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+                  <item.icon className="h-7 w-7 text-purple-600 group-hover:text-white transition-colors" />
                 </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{item.body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="contact" className="py-16 bg-black text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-extrabold">Get a machine at your location</h2>
-          <p className="mt-3 text-gray-300">Tell us about your property and we’ll follow up with a placement recommendation.</p>
-
-          <form onSubmit={handleFormSubmit} className="mt-8 grid gap-3 text-left">
-            <input required placeholder="Name" className="w-full rounded-xl px-4 py-3 bg-gray-900 border border-gray-700 focus:border-purple-500 outline-none" />
-            <input required type="email" placeholder="Email" className="w-full rounded-xl px-4 py-3 bg-gray-900 border border-gray-700 focus:border-purple-500 outline-none" />
-            <input placeholder="Business / Property Name" className="w-full rounded-xl px-4 py-3 bg-gray-900 border border-gray-700 focus:border-purple-500 outline-none" />
-            <textarea required placeholder="Tell us your location + estimated daily foot traffic" rows="4" className="w-full rounded-xl px-4 py-3 bg-gray-900 border border-gray-700 focus:border-purple-500 outline-none" />
-            <button type="submit" disabled={formStatus === 'submitting'} className="mt-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-60 px-6 py-3 rounded-full font-bold">
-              {formStatus === 'submitting' ? 'Sending...' : 'Request Placement'}
-            </button>
-            {formStatus === 'success' && <p className="text-green-400">Thanks — request received. We’ll reach out shortly.</p>}
-          </form>
-
-          <div className="mt-10 grid sm:grid-cols-3 gap-4 text-sm text-gray-300">
-            <div className="flex items-center justify-center gap-2"><Phone className="w-4 h-4" /> (817) 555-0199</div>
-            <div className="flex items-center justify-center gap-2"><Mail className="w-4 h-4" /> hello@northstarvending.co</div>
-            <div className="flex items-center justify-center gap-2"><MapPin className="w-4 h-4" /> Fort Worth, TX</div>
+      <section id="benefits" className="py-20 bg-gray-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row gap-16 items-center">
+            <div className="lg:w-1/2">
+              <h3 className="text-3xl font-extrabold sm:text-4xl mb-6">Full-Service Vending, Zero Headaches.</h3>
+              <div className="space-y-6">
+                {[
+                  { icon: <CreditCard />, title: 'Cashless Payments', desc: 'Accept Apple Pay, Google Pay, and major cards.' },
+                  { icon: <Wrench />, title: 'Free Maintenance', desc: 'If something breaks, we fix it fast and free.' },
+                  { icon: <CheckCircle2 />, title: 'Smart Inventory', desc: 'Remote monitoring helps keep machines stocked.' },
+                ].map((feature, idx) => (
+                  <div key={idx} className="flex items-start">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-full bg-purple-600/20 text-purple-500">{feature.icon}</div>
+                    <div className="ml-4">
+                      <h4 className="text-xl font-bold">{feature.title}</h4>
+                      <p className="text-gray-400">{feature.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="lg:w-1/2 w-full bg-gray-800 rounded-3xl p-8 border border-gray-700">
+              <h4 className="text-2xl font-bold mb-6"><span className="bg-purple-600 px-2 py-1 rounded text-sm mr-2">COST TO YOU</span>$0.00</h4>
+              <ul className="space-y-4 text-lg">
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-purple-500 w-6 h-6" /> Free Machine Delivery</li>
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-purple-500 w-6 h-6" /> Free Installation</li>
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-purple-500 w-6 h-6" /> Free Restocking</li>
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-purple-500 w-6 h-6" /> Free Repairs</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
+
+      <section id="contact" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2">
+            <div className="bg-purple-600 p-10 lg:p-16 text-white">
+              <h2 className="text-3xl font-extrabold mb-4">Ready for a Better Breakroom?</h2>
+              <div className="space-y-6 mt-10">
+                <div className="flex items-center"><Phone className="h-6 w-6 mr-4" /> <span>(555) 123-4567</span></div>
+                <div className="flex items-center"><Mail className="h-6 w-6 mr-4" /> <span>hello@destineats.com</span></div>
+                <div className="flex items-center"><MapPin className="h-6 w-6 mr-4" /> <span>Serving Destin, FL & Surrounding Areas</span></div>
+              </div>
+            </div>
+            <div className="p-10 lg:p-16">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Request a Machine</h3>
+              <form onSubmit={handleFormSubmit} className="space-y-6">
+                <input required type="text" className="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Business Name" />
+                <input required type="email" className="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Email" />
+                <input required type="tel" className="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Phone" />
+                <button type="submit" disabled={formStatus === 'submitting'} className="w-full py-4 px-6 rounded-xl text-lg font-bold text-white bg-purple-600 hover:bg-purple-700 disabled:opacity-60">
+                  {formStatus === 'submitting' ? 'Sending Request...' : formStatus === 'success' ? 'Request Received!' : 'Submit Request'}
+                </button>
+                {formStatus === 'success' && <p className="text-green-600 text-center font-medium mt-2">We will be in touch shortly!</p>}
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="bg-black py-12 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="flex items-center gap-2 mb-4 md:mb-0">
+            <Package className="w-8 h-8 text-purple-600" />
+            <span className="font-extrabold text-2xl tracking-tight text-white">Destin<span className="text-purple-600">Eats</span></span>
+          </div>
+          <span className="text-gray-400 text-sm">© {new Date().getFullYear()} Destin Eats Vending. All rights reserved.</span>
+        </div>
+      </footer>
     </div>
   )
 }
