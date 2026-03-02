@@ -113,10 +113,17 @@ export default function App() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <img src={machineImages[0]} alt="Machine 1" className="rounded-2xl h-52 sm:h-64 w-full object-cover border border-white/20" />
-            <img src={machineImages[2]} alt="Machine 2" className="rounded-2xl h-52 sm:h-64 w-full object-cover border border-white/20 mt-8" />
-            <div className="col-span-2 rounded-2xl bg-white/10 border border-white/30 p-6 backdrop-blur-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_40px_rgba(0,0,0,0.35)]">
+          <div className="space-y-4">
+            <div className="rounded-3xl p-5 bg-white/10 border border-white/30 backdrop-blur-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_40px_rgba(0,0,0,0.35)]">
+              <div className="mx-auto w-full max-w-[320px] aspect-[3/4]">
+                <img
+                  src={machineImages[0]}
+                  alt="Spinning vending machine"
+                  className="w-full h-full object-cover rounded-2xl border border-white/30 shadow-2xl [animation:spin_18s_linear_infinite]"
+                />
+              </div>
+            </div>
+            <div className="rounded-2xl bg-white/10 border border-white/30 p-6 backdrop-blur-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_40px_rgba(0,0,0,0.35)]">
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div><p className="text-3xl font-extrabold text-purple-300">24/7</p><p className="text-xs text-slate-300">Monitoring</p></div>
                 <div><p className="text-3xl font-extrabold text-purple-300">0$</p><p className="text-xs text-slate-300">Install Cost</p></div>
