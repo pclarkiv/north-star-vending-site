@@ -7,9 +7,9 @@ import {
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT
 
 const machineImages = [
-  'https://images.unsplash.com/photo-1625650484478-113df4bfc370?auto=format&fit=crop&q=80&w=1200',
-  'https://images.unsplash.com/photo-1585342565162-3704fc9b2a11?auto=format&fit=crop&q=80&w=1600',
-  'https://images.unsplash.com/photo-1578574577315-3fbeb0cecdc2?auto=format&fit=crop&q=80&w=1200',
+  'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&q=80&w=1200',
+  'https://images.unsplash.com/photo-1585342565162-3704fc9b2a11?auto=format&fit=crop&q=80&w=1200',
+  'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=1200',
 ]
 
 export default function App() {
