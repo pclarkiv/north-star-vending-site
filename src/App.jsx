@@ -117,6 +117,23 @@ export default function App() {
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-100 rounded-full blur-3xl opacity-30 -translate-y-1/2 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-100 rounded-full blur-3xl opacity-20 translate-y-1/2 -translate-x-1/3" />
+          
+          {/* Decorative vending machine pattern */}
+          <div className="absolute top-20 right-10 opacity-5">
+            <svg width="200" height="300" viewBox="0 0 200 300" fill="none">
+              <rect x="20" y="20" width="160" height="260" rx="12" stroke="currentColor" strokeWidth="3"/>
+              <rect x="40" y="50" width="120" height="80" rx="6" fill="currentColor" opacity="0.3"/>
+              <circle cx="100" cy="200" r="15" fill="currentColor" opacity="0.4"/>
+              <rect x="50" y="230" width="100" height="30" rx="4" fill="currentColor" opacity="0.3"/>
+            </svg>
+          </div>
+          <div className="absolute bottom-20 left-10 opacity-5 rotate-12">
+            <svg width="150" height="200" viewBox="0 0 150 200" fill="none">
+              <rect x="15" y="15" width="120" height="170" rx="10" stroke="currentColor" strokeWidth="2"/>
+              <rect x="30" y="40" width="90" height="60" rx="4" fill="currentColor" opacity="0.3"/>
+              <circle cx="75" cy="140" r="12" fill="currentColor" opacity="0.4"/>
+            </svg>
+          </div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -163,8 +180,25 @@ export default function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+      <section id="about" className="py-24 bg-white relative overflow-hidden">
+        {/* Decorative coffee cup */}
+        <div className="absolute top-20 left-10 opacity-10">
+          <svg width="100" height="120" viewBox="0 0 100 120" fill="none">
+            <path d="M20 40 L20 90 Q20 100 30 100 L70 100 Q80 100 80 90 L80 40 Z" fill="#7c3aed"/>
+            <ellipse cx="50" cy="40" rx="30" ry="8" fill="#a78bfa"/>
+            <rect x="80" y="55" width="15" height="25" rx="7" stroke="#7c3aed" strokeWidth="3" fill="none"/>
+          </svg>
+        </div>
+        
+        {/* Decorative snack bag */}
+        <div className="absolute bottom-20 right-20 opacity-10 rotate-12">
+          <svg width="80" height="100" viewBox="0 0 80 100" fill="none">
+            <path d="M15 20 Q10 15 15 10 L65 10 Q70 15 65 20 L60 80 Q60 90 50 90 L30 90 Q20 90 20 80 Z" fill="#7c3aed"/>
+            <ellipse cx="40" cy="50" rx="15" ry="20" fill="#a78bfa" opacity="0.5"/>
+          </svg>
+        </div>
+        
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-purple-600 mb-3 tracking-wide uppercase">About Us</p>
             <h2 className="text-4xl font-bold text-slate-900">Built on Integrity & Service</h2>
@@ -178,8 +212,23 @@ export default function App() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section id="services" className="py-24 bg-slate-50 relative overflow-hidden">
+        {/* Floating snack illustrations */}
+        <div className="absolute top-10 right-20 opacity-10 animate-float">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <rect x="15" y="20" width="50" height="40" rx="4" fill="#7c3aed"/>
+            <rect x="20" y="25" width="40" height="8" rx="2" fill="#a78bfa"/>
+            <rect x="20" y="38" width="40" height="8" rx="2" fill="#a78bfa"/>
+          </svg>
+        </div>
+        <div className="absolute bottom-20 left-10 opacity-10 animate-float-delayed">
+          <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+            <ellipse cx="30" cy="40" rx="20" ry="30" fill="#7c3aed"/>
+            <ellipse cx="30" cy="25" rx="15" ry="20" fill="#a78bfa"/>
+          </svg>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <div className="text-center mb-16">
             <p className="text-sm font-semibold text-purple-600 mb-3 tracking-wide uppercase">What We Offer</p>
             <h2 className="text-4xl font-bold text-slate-900">Tailored Vending Solutions</h2>
@@ -203,8 +252,12 @@ export default function App() {
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section id="gallery" className="py-24 bg-white relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-1/2 left-0 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-20" />
+        <div className="absolute bottom-10 right-0 w-60 h-60 bg-blue-100 rounded-full blur-3xl opacity-20" />
+        
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <div className="text-center mb-16">
             <p className="text-sm font-semibold text-purple-600 mb-3 tracking-wide uppercase">Machine Gallery</p>
             <h2 className="text-4xl font-bold text-slate-900">Modern Equipment</h2>
@@ -227,8 +280,34 @@ export default function App() {
       </section>
 
       {/* Benefits Section */}
-      <section id="benefits" className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section id="benefits" className="py-24 bg-slate-50 relative overflow-hidden">
+        {/* Vending machine illustration */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-5 hidden xl:block">
+          <svg width="300" height="400" viewBox="0 0 300 400" fill="none">
+            <rect x="50" y="30" width="200" height="340" rx="16" stroke="currentColor" strokeWidth="4"/>
+            <rect x="70" y="60" width="160" height="120" rx="8" fill="currentColor" opacity="0.2"/>
+            <rect x="80" y="200" width="140" height="40" rx="6" fill="currentColor" opacity="0.15"/>
+            <circle cx="150" cy="280" r="20" fill="currentColor" opacity="0.25"/>
+            <rect x="90" y="320" width="120" height="35" rx="6" fill="currentColor" opacity="0.2"/>
+            {/* Grid pattern for products */}
+            {[0, 1, 2].map((row) => 
+              [0, 1, 2, 3].map((col) => (
+                <rect 
+                  key={`${row}-${col}`}
+                  x={85 + col * 35} 
+                  y={70 + row * 35} 
+                  width="30" 
+                  height="30" 
+                  rx="3" 
+                  fill="currentColor" 
+                  opacity="0.1"
+                />
+              ))
+            )}
+          </svg>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <p className="text-sm font-semibold text-purple-600 mb-3 tracking-wide uppercase">Why Choose Us</p>
@@ -274,8 +353,26 @@ export default function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section id="contact" className="py-24 bg-white relative overflow-hidden">
+        {/* Decorative credit card icon */}
+        <div className="absolute top-10 right-1/4 opacity-5">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+            <rect x="10" y="15" width="100" height="50" rx="8" fill="currentColor"/>
+            <rect x="10" y="25" width="100" height="12" fill="currentColor" opacity="0.5"/>
+            <rect x="20" y="45" width="30" height="8" rx="2" fill="white" opacity="0.3"/>
+          </svg>
+        </div>
+        
+        {/* Decorative phone icon */}
+        <div className="absolute bottom-20 left-1/4 opacity-5">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <rect x="20" y="10" width="40" height="60" rx="8" stroke="currentColor" strokeWidth="3"/>
+            <rect x="25" y="18" width="30" height="40" rx="2" fill="currentColor" opacity="0.2"/>
+            <circle cx="40" cy="63" r="4" fill="currentColor" opacity="0.3"/>
+          </svg>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <div className="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200">
             <div className="grid lg:grid-cols-2">
               <div className="bg-purple-600 p-12 lg:p-16 text-white">
