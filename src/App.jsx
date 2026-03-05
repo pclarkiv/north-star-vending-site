@@ -63,6 +63,7 @@ export default function App() {
             </div>
 
             <div className="hidden md:flex items-center space-x-8">
+              <button onClick={() => scrollToSection('about')} className="hover:text-purple-300 transition-colors font-medium">About</button>
               <button onClick={() => scrollToSection('services')} className="hover:text-purple-300 transition-colors font-medium">Services</button>
               <button onClick={() => scrollToSection('gallery')} className="hover:text-purple-300 transition-colors font-medium">Gallery</button>
               <button onClick={() => scrollToSection('benefits')} className="hover:text-purple-300 transition-colors font-medium">Why Us</button>
@@ -80,7 +81,7 @@ export default function App() {
         {isMobileMenuOpen && (
           <div className="md:hidden bg-black/95 border-t border-white/10 absolute w-full left-0">
             <div className="px-4 pt-2 pb-6 space-y-2">
-              {['services', 'gallery', 'benefits'].map((id) => (
+              {['about', 'services', 'gallery', 'benefits'].map((id) => (
                 <button key={id} onClick={() => scrollToSection(id)} className="block w-full text-left px-3 py-3 text-base text-gray-300 hover:text-white hover:bg-white/10 rounded-md capitalize">{id}</button>
               ))}
               <button onClick={() => scrollToSection('contact')} className="block w-full text-center mt-4 bg-purple-600 text-white px-3 py-3 rounded-md font-bold hover:bg-purple-700">Get a Machine Today</button>
@@ -130,6 +131,20 @@ export default function App() {
                 <div><p className="text-3xl font-extrabold text-purple-300">Fast</p><p className="text-xs text-slate-300">Refills</p></div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="py-20 bg-gradient-to-b from-slate-950 to-slate-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-sm tracking-widest uppercase text-purple-300 font-bold">About Us</h2>
+            <p className="mt-2 text-4xl font-extrabold">Built on Integrity & Service</p>
+          </div>
+          <div className="rounded-3xl bg-white/10 backdrop-blur-2xl border border-white/20 p-8 md:p-12 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_20px_40px_rgba(0,0,0,0.3)]">
+            <p className="text-lg text-slate-200 leading-relaxed">
+              DestinEats was founded by <span className="font-semibold text-purple-300">Jamya Clark</span> on the core values of integrity, reliability, and local pride. We specialize in providing hassle-free vending services specifically designed to keep your business moving and your team fueled. My philosophy is simple: if our machines are always full and your people are smiling, I've done my job. We achieve this by offering a zero-cost partnership—providing and maintaining modern machines at no expense to you—equipped with contactless payment technology and a curated product selection tailored to your tastes. For me, this business is about more than just snacks; it's about building lasting professional relationships through smart inventory management and a personal commitment to top-tier service.
+            </p>
           </div>
         </div>
       </section>
