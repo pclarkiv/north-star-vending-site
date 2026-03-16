@@ -5,11 +5,20 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#f5f3ff',
-          600: '#7c3aed',
-          700: '#6d28d9'
-        }
-      }
+          canvas: '#f6f0e8',
+          sand: '#e8dcc8',
+          ink: '#1c1a17',
+          muted: '#675e55',
+          accent: '#b88a44',
+        },
+      },
+      fontFamily: {
+        sans: ['Manrope', 'sans-serif'],
+        serif: ['Cormorant Garamond', 'serif'],
+      },
+      boxShadow: {
+        haze: '0 32px 70px -44px rgba(41, 33, 24, 0.48)',
+      },
     },
   },
   plugins: [],

@@ -1,20 +1,214 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
-  Menu, X, Coffee, CreditCard, Wrench, Package,
-  Phone, Mail, MapPin, CheckCircle2, ChevronRight, ShieldCheck, Sparkles, Zap
-} from 'lucide-react'
+  ArrowRight,
+  ArrowUpRight,
+  Buildings,
+  CalendarCheck,
+  Check,
+  Coffee,
+  CreditCard,
+  DeviceMobile,
+  EnvelopeSimple,
+  ForkKnife,
+  Gauge,
+  GearSix,
+  Handshake,
+  ListChecks,
+  MapPin,
+  Package,
+  PhoneCall,
+  ShieldCheck,
+  Sparkle,
+  Storefront,
+  Timer,
+  Tray,
+  UsersThree,
+} from '@phosphor-icons/react'
+import heroVideo from '../Video_Generation_Complete.mp4'
 
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT
 
-const machineImages = [
-  'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&q=80&w=1200',
-  'https://images.unsplash.com/photo-1624823183493-ed5832f48f18?auto=format&fit=crop&q=80&w=1200',
-  'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=1200',
+const navItems = [
+  { id: 'story', label: 'Story' },
+  { id: 'programs', label: 'Programs' },
+  { id: 'service', label: 'Service' },
+  { id: 'contact', label: 'Contact' },
 ]
 
-export default function App() {
+const stats = [
+  { value: '$0', label: 'equipment and install cost' },
+  { value: '24/7', label: 'cashless monitoring and alerts' },
+  { value: '1 day', label: 'typical local service follow-up' },
+]
+
+const hospitalityNotes = [
+  'Curated assortment planning',
+  'Cashless hardware standard',
+  'Owner-led local service cadence',
+]
+
+const industries = [
+  {
+    title: 'Workplaces',
+    body: 'Office lounges, operations floors, and distribution teams that need dependable food and drink access across long shifts.',
+    icon: Buildings,
+  },
+  {
+    title: 'Apartments and hotels',
+    body: 'Lobby placements that read clean, quiet, and premium for residents and guests without adding work for onsite staff.',
+    icon: Storefront,
+  },
+  {
+    title: 'Schools and training facilities',
+    body: 'Balanced programs with straightforward replenishment plans, cashless checkout, and healthy-forward mix options.',
+    icon: UsersThree,
+  },
+]
+
+const machinePrograms = [
+  {
+    title: 'Lobby beverage wall',
+    finish: 'brushed graphite cabinet',
+    body: 'Cold brew, sparkling water, energy, and premium bottled drinks arranged for apartment communities, hotel lobbies, and amenity spaces.',
+    accent: 'from-[#d6c09c] via-[#9c7a48] to-[#5e4829]',
+    products: ['cold brew', 'sparkling water', 'electrolytes', 'energy'],
+  },
+  {
+    title: 'Breakroom snack suite',
+    finish: 'warm bronze trim',
+    body: 'A polished snack bank for offices and operations teams with a mix of familiar favorites, better-for-you staples, and rotating local hits.',
+    accent: 'from-[#d7c6af] via-[#b68d5c] to-[#6e5134]',
+    products: ['protein bars', 'chips', 'trail mix', 'cookies'],
+  },
+  {
+    title: 'Dual machine pairing',
+    finish: 'charcoal and brass detail',
+    body: 'Matched snack and drink placements for larger footprints where traffic, daypart shifts, and assortment depth all matter.',
+    accent: 'from-[#ece3d4] via-[#c9a46d] to-[#7f6138]',
+    products: ['waters', 'juice', 'pastries', 'salty snacks'],
+  },
+]
+
+const serviceSteps = [
+  {
+    title: 'Walkthrough and traffic read',
+    body: 'We review access, power, placement flow, and the type of people using the space so the equipment feels intentional from day one.',
+    icon: MapPin,
+  },
+  {
+    title: 'Machine plan and curated mix',
+    body: 'You get a tailored product approach based on shift patterns, resident expectations, wellness goals, and the finish level your space needs.',
+    icon: ListChecks,
+  },
+  {
+    title: 'Install, monitor, refine',
+    body: 'After launch we monitor sell-through, service the machine, and adjust the mix so the placement keeps earning its footprint.',
+    icon: GearSix,
+  },
+]
+
+const serviceFeatures = [
+  {
+    title: 'Cashless by default',
+    body: 'Tap pay, wallet pay, and modern card acceptance are standard so the machine works for guests, staff, and residents without friction.',
+    icon: CreditCard,
+  },
+  {
+    title: 'Remote visibility',
+    body: 'Inventory and machine health are monitored continuously so restocks and service are driven by actual movement, not guesswork.',
+    icon: Gauge,
+  },
+  {
+    title: 'Clean presentation',
+    body: 'Cabinet finish, product blocking, and service cadence are handled with the same care as the rest of your front-of-house experience.',
+    icon: ShieldCheck,
+  },
+]
+
+const proofPoints = [
+  {
+    title: 'No capital request',
+    body: 'Equipment, placement, and routine maintenance are covered as part of the partnership.',
+  },
+  {
+    title: 'Assortment tuning',
+    body: 'Fast-moving staples stay in place while underperforming items are replaced with smarter options.',
+  },
+  {
+    title: 'Local response',
+    body: 'Service stays close to Arlington, so the support loop stays direct and accountable.',
+  },
+]
+
+const testimonials = [
+  {
+    quote:
+      'The machines look considered instead of temporary. Residents use them every day, and our team never has to chase service calls.',
+    name: 'Marina House property team',
+    role: 'multifamily placement',
+  },
+  {
+    quote:
+      'What stood out was the product planning. They treated the breakroom like part of our employee experience, not just a box in the corner.',
+    name: 'Arlington Area operations office',
+    role: 'office and warehouse placement',
+  },
+]
+
+function MachineMockup({ accent, title }) {
+  return (
+    <div className="double-bezel p-2">
+      <div className="machine-shell relative overflow-hidden rounded-[2rem] bg-[linear-gradient(180deg,rgba(40,33,24,0.92),rgba(19,17,15,0.98))] p-4">
+        <div className={`absolute inset-x-4 top-4 h-28 rounded-[1.5rem] bg-gradient-to-br ${accent} opacity-80 blur-2xl`} />
+        <div className="relative grid grid-cols-[1.35fr_0.65fr] gap-3">
+          <div className="rounded-[1.55rem] border border-white/10 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+            <div className="mb-3 flex items-center justify-between text-[0.65rem] uppercase tracking-[0.28em] text-white/55">
+              <span>Display</span>
+              <span>{title}</span>
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {Array.from({ length: 20 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="h-10 rounded-xl border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.03))]"
+                />
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+              <div className="mb-3 text-[0.65rem] uppercase tracking-[0.28em] text-white/55">Pay</div>
+              <div className="space-y-2">
+                <div className="h-12 rounded-2xl bg-white/10" />
+                <div className="h-16 rounded-[1.25rem] border border-white/10 bg-black/25" />
+                <div className="grid grid-cols-3 gap-2">
+                  {Array.from({ length: 9 }).map((_, index) => (
+                    <div key={index} className="h-7 rounded-lg bg-white/10" />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+              <div className="mb-3 text-[0.65rem] uppercase tracking-[0.28em] text-white/55">Pickup</div>
+              <div className="h-20 rounded-[1.25rem] border border-dashed border-white/15 bg-black/30" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [formStatus, setFormStatus] = useState('idle')
+  const heroVideoRef = useRef(null)
+
+  useEffect(() => {
+    if (heroVideoRef.current) {
+      heroVideoRef.current.playbackRate = 0.82
+    }
+  }, [])
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
@@ -44,414 +238,565 @@ export default function App() {
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id)
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' })
     setIsMobileMenuOpen(false)
   }
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-purple-100">
-      {/* Navigation */}
-      <nav className="fixed w-full bg-white/80 backdrop-blur-xl z-50 border-b border-slate-200/60">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between h-20">
-            <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
-                  <Package className="w-5 h-5 text-white" />
-                </div>
-                <span className="font-bold text-xl tracking-tight">Destin<span className="text-purple-600">Eats</span></span>
-              </div>
-            </div>
+    <div className="relative min-h-screen overflow-hidden bg-[var(--canvas)] text-[var(--ink)] selection:bg-[color:var(--accent-soft)] selection:text-[var(--ink)]">
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-50">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(184,138,68,0.16),transparent_36%),radial-gradient(circle_at_88%_14%,rgba(111,126,94,0.12),transparent_24%),linear-gradient(180deg,rgba(255,251,244,0.9),rgba(246,240,230,0.96))]" />
+        <div className="noise-overlay absolute inset-0" />
+      </div>
 
-            <div className="hidden md:flex items-center space-x-1">
-              {['about', 'services', 'gallery', 'benefits'].map((section) => (
-                <button 
-                  key={section}
-                  onClick={() => scrollToSection(section)} 
-                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors capitalize"
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-[var(--ink)] focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--canvas)]"
+      >
+        Skip to content
+      </a>
+
+      <header className="relative z-20 px-4 pt-5 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1400px]">
+          <nav className="double-bezel mx-auto flex w-full max-w-[1180px] items-center justify-between rounded-full px-3 py-3 text-sm text-[var(--muted)]">
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="group inline-flex items-center gap-3 rounded-full px-3 py-2 text-left transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-px"
+            >
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--ink)] text-[var(--canvas)] shadow-[0_18px_40px_-24px_rgba(28,26,23,0.7)]">
+                <Package size={20} weight="duotone" />
+              </span>
+              <span>
+                <span className="block font-sans text-[0.72rem] uppercase tracking-[0.28em] text-[var(--muted)]">
+                  Arlington, Texas
+                </span>
+                <span className="block text-base font-semibold tracking-[-0.03em] text-[var(--ink)]">
+                  DestinEats
+                </span>
+              </span>
+            </button>
+
+            <div className="hidden items-center gap-1 md:flex">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => scrollToSection(item.id)}
+                  className="rounded-full px-4 py-2.5 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/55 hover:text-[var(--ink)] active:scale-[0.98]"
                 >
-                  {section}
+                  {item.label}
                 </button>
               ))}
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="ml-4 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-purple-600/25"
+            </div>
+
+            <div className="hidden md:block">
+              <button
+                type="button"
+                onClick={() => scrollToSection('contact')}
+                className="group inline-flex items-center gap-3 rounded-full bg-[var(--ink)] px-3 py-3 text-[var(--canvas)] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-px hover:bg-[#23201b] active:scale-[0.98]"
               >
-                Get Started
+                <span className="px-3 text-sm font-medium">Request a placement review</span>
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-px">
+                  <ArrowUpRight size={18} weight="bold" />
+                </span>
               </button>
             </div>
 
-            <div className="md:hidden flex items-center">
-              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-slate-600 hover:text-slate-900 p-2">
-                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-slate-200">
-            <div className="px-6 py-4 space-y-1">
-              {['about', 'services', 'gallery', 'benefits'].map((id) => (
-                <button 
-                  key={id} 
-                  onClick={() => scrollToSection(id)} 
-                  className="block w-full text-left px-4 py-3 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg capitalize"
-                >
-                  {id}
-                </button>
-              ))}
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="block w-full text-center mt-2 bg-purple-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-purple-700"
-              >
-                Get Started
-              </button>
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden bg-gradient-to-b from-slate-50 to-white">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-100 rounded-full blur-3xl opacity-30 -translate-y-1/2 translate-x-1/3" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-100 rounded-full blur-3xl opacity-20 translate-y-1/2 -translate-x-1/3" />
-          
-          {/* Decorative vending machine pattern */}
-          <div className="absolute top-20 right-10 opacity-5">
-            <svg width="200" height="300" viewBox="0 0 200 300" fill="none">
-              <rect x="20" y="20" width="160" height="260" rx="12" stroke="currentColor" strokeWidth="3"/>
-              <rect x="40" y="50" width="120" height="80" rx="6" fill="currentColor" opacity="0.3"/>
-              <circle cx="100" cy="200" r="15" fill="currentColor" opacity="0.4"/>
-              <rect x="50" y="230" width="100" height="30" rx="4" fill="currentColor" opacity="0.3"/>
-            </svg>
-          </div>
-          <div className="absolute bottom-20 left-10 opacity-5 rotate-12">
-            <svg width="150" height="200" viewBox="0 0 150 200" fill="none">
-              <rect x="15" y="15" width="120" height="170" rx="10" stroke="currentColor" strokeWidth="2"/>
-              <rect x="30" y="40" width="90" height="60" rx="4" fill="currentColor" opacity="0.3"/>
-              <circle cx="75" cy="140" r="12" fill="currentColor" opacity="0.4"/>
-            </svg>
-          </div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50 text-purple-700 text-sm font-medium mb-8">
-              <Sparkles className="w-4 h-4" /> Premium Vending in Destin, FL
-            </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6 tracking-tight">
-              Elevate your <span className="text-purple-600">breakroom</span>
-            </h1>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-10">
-              Modern vending machines with zero upfront cost. We handle everything—placement, stocking, and maintenance.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="px-8 py-4 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-medium shadow-lg shadow-purple-600/25 hover:shadow-xl hover:shadow-purple-600/30 transition-all inline-flex items-center justify-center gap-2"
-              >
-                Request Placement <ChevronRight className="w-5 h-5" />
-              </button>
-              <button 
-                onClick={() => scrollToSection('gallery')} 
-                className="px-8 py-4 rounded-lg border-2 border-slate-200 hover:border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition-all"
-              >
-                View Machines
-              </button>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 mt-20">
-            {[
-              { label: '24/7 Monitoring', value: 'Always On' },
-              { label: 'Setup Cost', value: '$0' },
-              { label: 'Response Time', value: '<24hrs' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-3xl font-bold text-slate-900 mb-1">{stat.value}</p>
-                <p className="text-sm text-slate-600">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-24 bg-white relative overflow-hidden">
-        {/* Decorative coffee cup */}
-        <div className="absolute top-20 left-10 opacity-10">
-          <svg width="100" height="120" viewBox="0 0 100 120" fill="none">
-            <path d="M20 40 L20 90 Q20 100 30 100 L70 100 Q80 100 80 90 L80 40 Z" fill="#7c3aed"/>
-            <ellipse cx="50" cy="40" rx="30" ry="8" fill="#a78bfa"/>
-            <rect x="80" y="55" width="15" height="25" rx="7" stroke="#7c3aed" strokeWidth="3" fill="none"/>
-          </svg>
-        </div>
-        
-        {/* Decorative snack bag */}
-        <div className="absolute bottom-20 right-20 opacity-10 rotate-12">
-          <svg width="80" height="100" viewBox="0 0 80 100" fill="none">
-            <path d="M15 20 Q10 15 15 10 L65 10 Q70 15 65 20 L60 80 Q60 90 50 90 L30 90 Q20 90 20 80 Z" fill="#7c3aed"/>
-            <ellipse cx="40" cy="50" rx="15" ry="20" fill="#a78bfa" opacity="0.5"/>
-          </svg>
-        </div>
-        
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative">
-          <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-purple-600 mb-3 tracking-wide uppercase">About Us</p>
-            <h2 className="text-4xl font-bold text-slate-900">Built on Integrity & Service</h2>
-          </div>
-          <div className="bg-slate-50 rounded-2xl p-10 md:p-12 border border-slate-200">
-            <p className="text-lg text-slate-700 leading-relaxed">
-              DestinEats was founded by <span className="font-semibold text-slate-900">Jamya Clark</span> on the core values of integrity, reliability, and local pride. We specialize in providing hassle-free vending services specifically designed to keep your business moving and your team fueled. My philosophy is simple: if our machines are always full and your people are smiling, I've done my job. We achieve this by offering a zero-cost partnership—providing and maintaining modern machines at no expense to you—equipped with contactless payment technology and a curated product selection tailored to your tastes. For me, this business is about more than just snacks; it's about building lasting professional relationships through smart inventory management and a personal commitment to top-tier service.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="py-24 bg-slate-50 relative overflow-hidden">
-        {/* Floating snack illustrations */}
-        <div className="absolute top-10 right-20 opacity-10 animate-float">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <rect x="15" y="20" width="50" height="40" rx="4" fill="#7c3aed"/>
-            <rect x="20" y="25" width="40" height="8" rx="2" fill="#a78bfa"/>
-            <rect x="20" y="38" width="40" height="8" rx="2" fill="#a78bfa"/>
-          </svg>
-        </div>
-        <div className="absolute bottom-20 left-10 opacity-10 animate-float-delayed">
-          <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
-            <ellipse cx="30" cy="40" rx="20" ry="30" fill="#7c3aed"/>
-            <ellipse cx="30" cy="25" rx="15" ry="20" fill="#a78bfa"/>
-          </svg>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold text-purple-600 mb-3 tracking-wide uppercase">What We Offer</p>
-            <h2 className="text-4xl font-bold text-slate-900">Tailored Vending Solutions</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: Package, title: 'Premium Snacks', body: 'Name-brand snacks and local favorites matched to your audience.' },
-              { icon: Coffee, title: 'Drinks & Energy', body: 'Cold beverages, sparkling waters, energy drinks, and more.' },
-              { icon: ShieldCheck, title: 'Healthy Options', body: 'Protein bars, low-sugar choices, and wellness-friendly selections.' },
-            ].map((item) => (
-              <div key={item.title} className="group bg-white rounded-2xl p-8 border border-slate-200 hover:border-purple-200 hover:shadow-xl hover:shadow-purple-600/5 transition-all">
-                <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                  <item.icon className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{item.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery Section */}
-      <section id="gallery" className="py-24 bg-white relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-1/2 left-0 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-20" />
-        <div className="absolute bottom-10 right-0 w-60 h-60 bg-blue-100 rounded-full blur-3xl opacity-20" />
-        
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold text-purple-600 mb-3 tracking-wide uppercase">Machine Gallery</p>
-            <h2 className="text-4xl font-bold text-slate-900">Modern Equipment</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {machineImages.map((src, i) => (
-              <div key={src} className="group relative overflow-hidden rounded-2xl border border-slate-200 hover:border-purple-200 transition-all">
-                <div className="aspect-[3/4] overflow-hidden">
-                  <img 
-                    src={src} 
-                    alt={`Vending machine ${i + 1}`} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section id="benefits" className="py-24 bg-slate-50 relative overflow-hidden">
-        {/* Vending machine illustration */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-5 hidden xl:block">
-          <svg width="300" height="400" viewBox="0 0 300 400" fill="none">
-            <rect x="50" y="30" width="200" height="340" rx="16" stroke="currentColor" strokeWidth="4"/>
-            <rect x="70" y="60" width="160" height="120" rx="8" fill="currentColor" opacity="0.2"/>
-            <rect x="80" y="200" width="140" height="40" rx="6" fill="currentColor" opacity="0.15"/>
-            <circle cx="150" cy="280" r="20" fill="currentColor" opacity="0.25"/>
-            <rect x="90" y="320" width="120" height="35" rx="6" fill="currentColor" opacity="0.2"/>
-            {/* Grid pattern for products */}
-            {[0, 1, 2].map((row) => 
-              [0, 1, 2, 3].map((col) => (
-                <rect 
-                  key={`${row}-${col}`}
-                  x={85 + col * 35} 
-                  y={70 + row * 35} 
-                  width="30" 
-                  height="30" 
-                  rx="3" 
-                  fill="currentColor" 
-                  opacity="0.1"
+            <button
+              type="button"
+              aria-label="Toggle navigation"
+              onClick={() => setIsMobileMenuOpen((value) => !value)}
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/5 bg-white/70 text-[var(--ink)] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white md:hidden"
+            >
+              <span className="relative h-4 w-5">
+                <span
+                  className={`absolute left-0 top-0 h-[1.5px] w-5 bg-current transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    isMobileMenuOpen ? 'top-[7px] rotate-45' : ''
+                  }`}
                 />
-              ))
-            )}
-          </svg>
+                <span
+                  className={`absolute left-0 top-[7px] h-[1.5px] w-5 bg-current transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-[14px] h-[1.5px] w-5 bg-current transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    isMobileMenuOpen ? 'top-[7px] -rotate-45' : ''
+                  }`}
+                />
+              </span>
+            </button>
+          </nav>
+
+          <div
+            className={`mx-auto mt-3 max-w-[1180px] overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden ${
+              isMobileMenuOpen ? 'max-h-[420px] opacity-100' : 'max-h-0 opacity-0'
+            }`}
+          >
+            <div className="double-bezel rounded-[2rem] p-3">
+              <div className="rounded-[calc(2rem-0.375rem)] bg-white/88 p-3 backdrop-blur-sm">
+                {navItems.map((item, index) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => scrollToSection(item.id)}
+                    className="reveal-item flex w-full items-center justify-between rounded-[1.35rem] px-4 py-4 text-left text-base text-[var(--ink)]"
+                    style={{ '--delay': `${index * 80}ms` }}
+                  >
+                    <span>{item.label}</span>
+                    <ArrowRight size={18} />
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('contact')}
+                  className="mt-2 inline-flex w-full items-center justify-between rounded-[1.35rem] bg-[var(--ink)] px-5 py-4 text-base text-[var(--canvas)] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]"
+                >
+                  <span>Request a placement review</span>
+                  <ArrowUpRight size={18} weight="bold" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-sm font-semibold text-purple-600 mb-3 tracking-wide uppercase">Why Choose Us</p>
-              <h2 className="text-4xl font-bold text-slate-900 mb-8">Full-Service Vending.<br />Zero Headaches.</h2>
+      </header>
+
+      <main id="main-content" className="relative z-10">
+        <section className="px-4 pb-20 pt-10 sm:px-6 md:pb-28 md:pt-14 lg:px-8 lg:pb-32">
+          <div className="mx-auto grid min-h-[100dvh] max-w-[1400px] items-center gap-12 md:grid-cols-[1.08fr_0.92fr]">
+            <div className="space-y-8 md:pl-4 lg:pl-8">
+              <div className="reveal-item inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-4 py-2 text-[0.72rem] uppercase tracking-[0.28em] text-[var(--muted)] shadow-[0_18px_40px_-28px_rgba(28,26,23,0.45)] backdrop-blur-sm">
+                <Sparkle size={15} weight="fill" className="text-[var(--accent)]" />
+                premium local vending partner
+              </div>
+
               <div className="space-y-6">
-                {[
-                  { icon: <CreditCard className="w-5 h-5" />, title: 'Cashless Payments', desc: 'Apple Pay, Google Pay, and all major cards accepted.' },
-                  { icon: <Wrench className="w-5 h-5" />, title: 'Free Maintenance', desc: 'Fast support and repairs at no cost to you.' },
-                  { icon: <Zap className="w-5 h-5" />, title: 'Smart Inventory', desc: 'Real-time monitoring ensures machines stay stocked.' },
-                ].map((f) => (
-                  <div key={f.title} className="flex gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0">
-                      {f.icon}
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-lg text-slate-900 mb-1">{f.title}</h4>
-                      <p className="text-slate-600">{f.desc}</p>
+                <p className="reveal-item max-w-xl text-sm font-medium uppercase tracking-[0.28em] text-[var(--muted)]" style={{ '--delay': '80ms' }}>
+                  Crafted for workplaces, residences, and guest-facing spaces
+                </p>
+                <h1 className="reveal-item max-w-[12ch] text-5xl leading-[0.92] tracking-[-0.05em] text-[var(--ink)] sm:text-6xl lg:text-[5.4rem]" style={{ '--delay': '160ms' }}>
+                  Vending that feels considered, not improvised.
+                </h1>
+                <p className="reveal-item max-w-[62ch] text-lg leading-relaxed text-[var(--muted)] sm:text-xl" style={{ '--delay': '240ms' }}>
+                  DestinEats installs modern snack and beverage machines that match the tone of your property, stay stocked through real monitoring, and cost your team nothing to launch.
+                </p>
+              </div>
+
+              <div className="reveal-item flex flex-col gap-4 sm:flex-row" style={{ '--delay': '320ms' }}>
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('contact')}
+                  className="group inline-flex items-center justify-between gap-3 rounded-full bg-[var(--ink)] px-3 py-3 text-[var(--canvas)] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-px hover:bg-[#23201b] active:scale-[0.98]"
+                >
+                  <span className="px-4 text-sm font-medium sm:text-base">Schedule a site review</span>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-px">
+                    <ArrowUpRight size={19} weight="bold" />
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('programs')}
+                  className="inline-flex items-center justify-center gap-3 rounded-full border border-black/8 bg-white/65 px-6 py-3.5 text-sm font-medium text-[var(--ink)] shadow-[0_16px_36px_-28px_rgba(28,26,23,0.4)] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-px hover:bg-white active:scale-[0.98] sm:text-base"
+                >
+                  See machine programs
+                  <ArrowRight size={18} />
+                </button>
+              </div>
+
+              <div className="reveal-item grid gap-3 sm:grid-cols-3" style={{ '--delay': '400ms' }}>
+                {stats.map((stat) => (
+                  <div key={stat.label} className="double-bezel rounded-[1.6rem] p-1.5">
+                    <div className="rounded-[calc(1.6rem-0.375rem)] bg-white/84 px-5 py-5 backdrop-blur-sm">
+                      <div className="text-2xl font-semibold tracking-[-0.04em] text-[var(--ink)]">{stat.value}</div>
+                      <div className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{stat.label}</div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            
-            <div className="bg-white rounded-2xl border border-slate-200 p-10 shadow-xl shadow-slate-900/5">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Zero Cost to You</h3>
-              <p className="text-purple-600 font-semibold text-lg mb-8">$0.00 upfront or monthly</p>
-              <ul className="space-y-4">
-                {[
-                  'Free delivery and professional setup',
-                  'Weekly restocking and inventory management',
-                  'Ongoing cleaning and maintenance',
-                  'Dedicated local support team',
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-700">{item}</span>
-                  </li>
-                ))}
-              </ul>
+
+            <div className="relative flex items-center justify-center md:pr-4 lg:pr-8">
+              <div className="absolute -left-8 top-1/4 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(184,138,68,0.3),transparent_70%)] blur-3xl translate-y-[-10%]" />
+              <div className="absolute bottom-1/4 right-0 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(111,126,94,0.25),transparent_70%)] blur-3xl translate-y-[10%]" />
+
+              <div className="reveal-item relative z-10 w-full max-w-[28rem]" style={{ '--delay': '160ms' }}>
+                <div className="relative overflow-hidden rounded-[2.5rem] shadow-2xl">
+                  <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(11,9,8,0.0),rgba(11,9,8,0.15))] pointer-events-none"></div>
+                  <video
+                    ref={heroVideoRef}
+                    className="hero-video w-full h-auto transition-transform duration-700 hover:scale-105"
+                    src={heroVideo}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-24 bg-white relative overflow-hidden">
-        {/* Decorative credit card icon */}
-        <div className="absolute top-10 right-1/4 opacity-5">
-          <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
-            <rect x="10" y="15" width="100" height="50" rx="8" fill="currentColor"/>
-            <rect x="10" y="25" width="100" height="12" fill="currentColor" opacity="0.5"/>
-            <rect x="20" y="45" width="30" height="8" rx="2" fill="white" opacity="0.3"/>
-          </svg>
-        </div>
-        
-        {/* Decorative phone icon */}
-        <div className="absolute bottom-20 left-1/4 opacity-5">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <rect x="20" y="10" width="40" height="60" rx="8" stroke="currentColor" strokeWidth="3"/>
-            <rect x="25" y="18" width="30" height="40" rx="2" fill="currentColor" opacity="0.2"/>
-            <circle cx="40" cy="63" r="4" fill="currentColor" opacity="0.3"/>
-          </svg>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <div className="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200">
-            <div className="grid lg:grid-cols-2">
-              <div className="bg-purple-600 p-12 lg:p-16 text-white">
-                <h2 className="text-3xl font-bold mb-4">Ready to Upgrade?</h2>
-                <p className="text-purple-100 mb-10 text-lg">Tell us about your location and we'll recommend the perfect setup.</p>
-                <div className="space-y-5">
-                  <div className="flex items-center gap-3">
-                    <Phone className="h-5 w-5" /> 
-                    <span>(555) 123-4567</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5" /> 
-                    <span>hello@destineats.com</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <MapPin className="h-5 w-5" /> 
-                    <span>Serving Destin, FL & surrounding areas</span>
+        <section id="story" className="px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+              <div className="space-y-5 lg:sticky lg:top-28">
+                <p className="text-[0.72rem] uppercase tracking-[0.28em] text-[var(--muted)]">The company</p>
+                <h2 className="max-w-[10ch] text-4xl leading-[0.95] tracking-[-0.05em] text-[var(--ink)] sm:text-5xl">
+                  Local service with a hospitality point of view.
+                </h2>
+              </div>
+
+              <div className="double-bezel rounded-[2.4rem] p-2.5">
+                <div className="rounded-[calc(2.4rem-0.5rem)] bg-white/84 p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-sm sm:p-10 lg:p-12">
+                  <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+                    <div>
+                      <p className="max-w-[64ch] text-lg leading-relaxed text-[var(--muted)]">
+                        DestinEats is built for owners and managers who want vending to look appropriate in the room, stay dependable in daily use, and stop becoming one more vendor problem for the team. The company focuses on thoughtful placements, measured assortment planning, and quick local follow-through rather than generic machine drops.
+                      </p>
+                      <p className="mt-5 max-w-[64ch] text-lg leading-relaxed text-[var(--muted)]">
+                        The result is a zero-capital vending program that feels clean in presentation, practical in operation, and flexible enough to reflect the traffic patterns and expectations of each site.
+                      </p>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+                      {proofPoints.map((item) => (
+                        <div key={item.title} className="rounded-[1.7rem] bg-[var(--sand)]/75 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]">
+                          <p className="text-sm font-medium uppercase tracking-[0.18em] text-[#806a49]">{item.title}</p>
+                          <p className="mt-3 text-sm leading-relaxed text-[#5e5449]">{item.body}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-              
-              <div className="p-12 lg:p-16 bg-white">
-                <h3 className="text-2xl font-bold text-slate-900 mb-6">Request Placement</h3>
-                <form onSubmit={handleFormSubmit} className="space-y-5">
-                  <input 
-                    name="business" 
-                    required 
-                    type="text" 
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" 
-                    placeholder="Business Name" 
-                  />
-                  <input 
-                    name="email" 
-                    required 
-                    type="email" 
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" 
-                    placeholder="Email Address" 
-                  />
-                  <input 
-                    name="phone" 
-                    required 
-                    type="tel" 
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" 
-                    placeholder="Phone Number" 
-                  />
-                  <textarea 
-                    name="notes" 
-                    rows="4" 
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all resize-none" 
-                    placeholder="Tell us about your location and estimated daily traffic" 
-                  />
-                  <button 
-                    type="submit" 
-                    disabled={formStatus === 'submitting'} 
-                    className="w-full py-4 rounded-lg text-base font-semibold text-white bg-purple-600 hover:bg-purple-700 disabled:opacity-60 transition-all shadow-lg shadow-purple-600/25 hover:shadow-xl hover:shadow-purple-600/30"
-                  >
-                    {formStatus === 'submitting' ? 'Sending...' : formStatus === 'success' ? 'Request Received!' : 'Submit Request'}
-                  </button>
-                  {formStatus === 'success' && <p className="text-green-600 text-center font-medium">We'll be in touch shortly!</p>}
-                  {formStatus === 'error' && <p className="text-red-600 text-center font-medium">Something went wrong. Please try again.</p>}
-                </form>
+            </div>
+          </div>
+        </section>
+
+        <section id="programs" className="px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+              <div>
+                <p className="text-[0.72rem] uppercase tracking-[0.28em] text-[var(--muted)]">Machine programs</p>
+                <h2 className="mt-4 max-w-[10ch] text-4xl leading-[0.95] tracking-[-0.05em] text-[var(--ink)] sm:text-5xl">
+                  Built for the room, the traffic, and the people using it.
+                </h2>
+              </div>
+              <p className="max-w-[62ch] text-lg leading-relaxed text-[var(--muted)]">
+                Instead of forcing every location into the same setup, we shape the placement around the kind of experience the space should deliver and the kind of products that actually move there.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 lg:grid-cols-[1.15fr_0.85fr_0.85fr]">
+              {machinePrograms.map((program, index) => (
+                <article key={program.title} className={`double-bezel rounded-[2.25rem] p-2.5 ${index === 0 ? 'lg:translate-y-8' : ''}`}>
+                  <div className="rounded-[calc(2.25rem-0.5rem)] bg-white/84 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-sm sm:p-7">
+                    <MachineMockup accent={program.accent} title={program.title} />
+                    <div className="mt-6 space-y-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <h3 className="text-2xl tracking-[-0.04em] text-[var(--ink)]">{program.title}</h3>
+                        <span className="rounded-full border border-black/8 bg-[var(--sand)]/70 px-3 py-2 text-[0.72rem] uppercase tracking-[0.18em] text-[#776147]">
+                          {program.finish}
+                        </span>
+                      </div>
+                      <p className="text-base leading-relaxed text-[var(--muted)]">{program.body}</p>
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {program.products.map((product) => (
+                          <span key={product} className="rounded-full bg-[#f3ecdf] px-3 py-2 text-sm text-[#6c5c47]">
+                            {product}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="grid gap-6 lg:grid-cols-[0.94fr_1.06fr]">
+              <div className="double-bezel rounded-[2.35rem] p-2.5">
+                <div className="rounded-[calc(2.35rem-0.5rem)] bg-[linear-gradient(155deg,#201c18,#15120f)] p-8 text-[var(--canvas)] shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] sm:p-10">
+                  <p className="text-[0.72rem] uppercase tracking-[0.28em] text-white/55">Where the machines belong</p>
+                  <h2 className="mt-4 max-w-[12ch] text-4xl leading-[0.95] tracking-[-0.05em] sm:text-5xl">
+                    Programs for the spaces people use every day.
+                  </h2>
+                  <div className="mt-10 grid gap-4">
+                    {industries.map((industry) => (
+                      <div key={industry.title} className="rounded-[1.7rem] border border-white/10 bg-white/[0.05] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                        <div className="flex items-center gap-3">
+                          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-[var(--canvas)]">
+                            <industry.icon size={22} weight="duotone" />
+                          </span>
+                          <h3 className="text-xl tracking-[-0.03em] text-white">{industry.title}</h3>
+                        </div>
+                        <p className="mt-4 text-sm leading-relaxed text-white/72">{industry.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-6">
+                <div className="double-bezel rounded-[2.35rem] p-2.5">
+                  <div className="rounded-[calc(2.35rem-0.5rem)] bg-white/84 p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-sm sm:p-10">
+                    <div className="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.28em] text-[var(--muted)]">
+                      <ForkKnife size={16} className="text-[var(--accent)]" />
+                      curation
+                    </div>
+                    <h3 className="mt-4 max-w-[15ch] text-3xl tracking-[-0.04em] text-[var(--ink)] sm:text-[2.35rem]">
+                      Product mix is tuned like a service program, not a warehouse list.
+                    </h3>
+                    <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                      {[
+                        ['Daily staples', 'fast-moving drinks, chips, bars, and familiar comfort items'],
+                        ['Wellness layer', 'protein, low sugar, and lighter picks for balanced assortments'],
+                        ['Location edits', 'resident favorites, shift-specific items, and seasonal adjustments'],
+                      ].map(([title, body]) => (
+                        <div key={title} className="rounded-[1.5rem] bg-[var(--sand)]/72 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.42)]">
+                          <p className="text-sm font-medium uppercase tracking-[0.18em] text-[#7a6344]">{title}</p>
+                          <p className="mt-3 text-sm leading-relaxed text-[#5d5448]">{body}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid gap-6 sm:grid-cols-3">
+                  {serviceFeatures.map((feature) => (
+                    <div key={feature.title} className="double-bezel rounded-[1.95rem] p-2">
+                      <div className="rounded-[calc(1.95rem-0.5rem)] bg-white/82 p-6 backdrop-blur-sm">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--sand)] text-[#8c6c3b] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
+                          <feature.icon size={22} weight="duotone" />
+                        </span>
+                        <h3 className="mt-5 text-xl tracking-[-0.03em] text-[var(--ink)]">{feature.title}</h3>
+                        <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{feature.body}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-50 py-12 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
-              <Package className="w-4 h-4 text-white" />
+        <section id="service" className="px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-start">
+              <div className="space-y-5">
+                <p className="text-[0.72rem] uppercase tracking-[0.28em] text-[var(--muted)]">How service runs</p>
+                <h2 className="max-w-[10ch] text-4xl leading-[0.95] tracking-[-0.05em] text-[var(--ink)] sm:text-5xl">
+                  A quiet process that keeps the placement dependable.
+                </h2>
+                <p className="max-w-[60ch] text-lg leading-relaxed text-[var(--muted)]">
+                  The point is simple: the machine should feel useful to the people onsite and nearly invisible to the team responsible for the building.
+                </p>
+              </div>
+
+              <div className="grid gap-5">
+                {serviceSteps.map((step, index) => (
+                  <article key={step.title} className="double-bezel rounded-[2.1rem] p-2.5">
+                    <div className="rounded-[calc(2.1rem-0.5rem)] bg-white/84 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-sm sm:p-7">
+                      <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="flex items-start gap-4">
+                          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--sand)] text-[#8b6d3e] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]">
+                            <step.icon size={24} weight="duotone" />
+                          </span>
+                          <div>
+                            <p className="text-[0.72rem] uppercase tracking-[0.22em] text-[var(--muted)]">step {index + 1}</p>
+                            <h3 className="mt-2 text-2xl tracking-[-0.04em] text-[var(--ink)]">{step.title}</h3>
+                          </div>
+                        </div>
+                        <p className="max-w-[38ch] text-base leading-relaxed text-[var(--muted)]">{step.body}</p>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
-            <span className="font-bold text-lg">Destin<span className="text-purple-600">Eats</span></span>
           </div>
-          <span className="text-slate-600 text-sm">© {new Date().getFullYear()} DestinEats Vending. All rights reserved.</span>
+        </section>
+
+        <section className="px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="double-bezel rounded-[2.6rem] p-2.5">
+              <div className="rounded-[calc(2.6rem-0.5rem)] bg-[linear-gradient(150deg,#201c18,#15120f)] px-7 py-8 text-[var(--canvas)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+                <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+                  <div>
+                    <p className="text-[0.72rem] uppercase tracking-[0.28em] text-white/55">What clients notice</p>
+                    <h2 className="mt-4 max-w-[12ch] text-4xl leading-[0.95] tracking-[-0.05em] sm:text-5xl">
+                      The equipment feels polished, and the service feels accountable.
+                    </h2>
+                  </div>
+                  <div className="grid gap-5 md:grid-cols-2">
+                    {testimonials.map((testimonial) => (
+                      <figure key={testimonial.name} className="rounded-[1.9rem] border border-white/10 bg-white/[0.05] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                        <blockquote className="text-lg leading-relaxed text-white/82">“{testimonial.quote}”</blockquote>
+                        <figcaption className="mt-6 border-t border-white/10 pt-4 text-sm text-white/62">
+                          <div className="font-medium text-white">{testimonial.name}</div>
+                          <div className="mt-1 uppercase tracking-[0.18em]">{testimonial.role}</div>
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="px-4 pb-24 pt-20 sm:px-6 md:pb-32 md:pt-28 lg:px-8">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="double-bezel rounded-[2.45rem] p-2.5">
+                <div className="rounded-[calc(2.45rem-0.5rem)] bg-[linear-gradient(150deg,#1e1a16,#15120f)] p-8 text-[var(--canvas)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-10 lg:p-12">
+                  <p className="text-[0.72rem] uppercase tracking-[0.28em] text-white/55">Start the conversation</p>
+                  <h2 className="mt-4 max-w-[11ch] text-4xl leading-[0.95] tracking-[-0.05em] sm:text-5xl">
+                    Tell us about the location and we will shape the right placement.
+                  </h2>
+                  <p className="mt-6 max-w-[28rem] text-lg leading-relaxed text-white/68">
+                    Share the property type, approximate traffic, and what kind of mix you want the machine to support.
+                  </p>
+
+                  <div className="mt-10 grid gap-4">
+                    <div className="rounded-[1.65rem] border border-white/10 bg-white/[0.05] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                      <div className="flex items-center gap-3 text-sm uppercase tracking-[0.18em] text-white/55">
+                        <EnvelopeSimple size={18} />
+                        Email
+                      </div>
+                      <p className="mt-3 text-lg text-white">hello@destineats.co</p>
+                    </div>
+                    <div className="rounded-[1.65rem] border border-white/10 bg-white/[0.05] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                      <div className="flex items-center gap-3 text-sm uppercase tracking-[0.18em] text-white/55">
+                        <PhoneCall size={18} />
+                        Response window
+                      </div>
+                      <p className="mt-3 text-lg text-white">Most inquiries are reviewed within one business day.</p>
+                    </div>
+                    <div className="rounded-[1.65rem] border border-white/10 bg-white/[0.05] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                      <div className="flex items-center gap-3 text-sm uppercase tracking-[0.18em] text-white/55">
+                        <Handshake size={18} />
+                        Best fit
+                      </div>
+                      <p className="mt-3 text-lg text-white">Offices, apartment communities, schools, gyms, hospitality-adjacent properties.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="double-bezel rounded-[2.45rem] p-2.5">
+                <div className="rounded-[calc(2.45rem-0.5rem)] bg-white/88 p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-sm sm:p-10 lg:p-12">
+                  <div className="mb-8 flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[0.72rem] uppercase tracking-[0.28em] text-[var(--muted)]">Placement review form</p>
+                      <h3 className="mt-3 text-3xl tracking-[-0.04em] text-[var(--ink)]">Request a recommendation</h3>
+                    </div>
+                    <div className="hidden h-12 w-12 items-center justify-center rounded-full bg-[var(--sand)] text-[#8a6d3f] shadow-[inset_0_1px_0_rgba(255,255,255,0.42)] sm:flex">
+                      <CalendarCheck size={22} weight="duotone" />
+                    </div>
+                  </div>
+
+                  <form onSubmit={handleFormSubmit} className="grid gap-5">
+                    <label className="grid gap-2">
+                      <span className="text-sm font-medium text-[var(--ink)]">Business or property name</span>
+                      <input
+                        name="business"
+                        required
+                        type="text"
+                        className="form-input"
+                        placeholder="Example: Harbor Pointe Offices"
+                      />
+                      <span className="text-sm text-[var(--muted)]">Tell us the site name so we can tailor the recommendation.</span>
+                    </label>
+
+                    <div className="grid gap-5 md:grid-cols-2">
+                      <label className="grid gap-2">
+                        <span className="text-sm font-medium text-[var(--ink)]">Email address</span>
+                        <input name="email" required type="email" className="form-input" placeholder="you@company.com" />
+                        <span className="text-sm text-[var(--muted)]">We will send follow-up details here.</span>
+                      </label>
+
+                      <label className="grid gap-2">
+                        <span className="text-sm font-medium text-[var(--ink)]">Phone number</span>
+                        <input name="phone" required type="tel" className="form-input" placeholder="Best call-back number" />
+                        <span className="text-sm text-[var(--muted)]">Optional after-hours support details can be added in notes.</span>
+                      </label>
+                    </div>
+
+                    <label className="grid gap-2">
+                      <span className="text-sm font-medium text-[var(--ink)]">Location details</span>
+                      <textarea
+                        name="notes"
+                        rows="5"
+                        className="form-input min-h-[160px] resize-none"
+                        placeholder="Property type, estimated daily traffic, preferred product mix, service hours, or any finish requirements"
+                      />
+                      <span className="text-sm text-[var(--muted)]">Include any details that would help us plan the right machine program.</span>
+                    </label>
+
+                    <button
+                      type="submit"
+                      disabled={formStatus === 'submitting'}
+                      className="group mt-2 inline-flex items-center justify-between rounded-full bg-[var(--ink)] px-3 py-3 text-[var(--canvas)] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-px hover:bg-[#23201b] disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.98]"
+                    >
+                      <span className="px-4 text-sm font-medium sm:text-base">
+                        {formStatus === 'submitting'
+                          ? 'Sending request'
+                          : formStatus === 'success'
+                            ? 'Request received'
+                            : 'Send placement review request'}
+                      </span>
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-px">
+                        <ArrowUpRight size={19} weight="bold" />
+                      </span>
+                    </button>
+
+                    {formStatus === 'success' && (
+                      <p className="inline-flex items-center gap-2 rounded-full bg-[#edf4ea] px-4 py-2 text-sm text-[#476245]">
+                        <Check size={16} weight="bold" />
+                        Thanks. Your request is in and we will follow up shortly.
+                      </p>
+                    )}
+
+                    {formStatus === 'error' && (
+                      <p className="rounded-[1.25rem] border border-[#d6c2b7] bg-[#f7efe9] px-4 py-3 text-sm text-[#835d4d]">
+                        Connection failed. Please try again or send a note to hello@destineats.co.
+                      </p>
+                    )}
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="relative z-10 border-t border-black/6 px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--ink)] text-[var(--canvas)] shadow-[0_16px_36px_-24px_rgba(28,26,23,0.65)]">
+              <Package size={20} weight="duotone" />
+            </span>
+            <div>
+              <div className="text-sm uppercase tracking-[0.24em] text-[var(--muted)]">DestinEats</div>
+              <div className="mt-1 text-sm text-[var(--muted)]">Arlington, Texas vending placement and service</div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 text-sm text-[var(--muted)] sm:flex-row sm:items-center sm:gap-6">
+            <a href="/privacy-policy.html" className="transition-colors hover:text-[var(--ink)]">Privacy policy</a>
+            <a href="/terms-of-service.html" className="transition-colors hover:text-[var(--ink)]">Terms of service</a>
+            <span>© {new Date().getFullYear()} DestinEats</span>
+          </div>
         </div>
       </footer>
     </div>
   )
 }
+
+export default App
